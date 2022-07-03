@@ -1,0 +1,13 @@
+cc = cc
+cflags = -Wall
+
+rule compile
+  deps    = gcc
+  depfile = $out.d
+  command = $cc -MMD -MP -MF $out.d $cflags $target_arch -c -o $out $in
+
+rule link
+  command = $cc $ldflags $target_arch $in $loadlibes $ldlibs -o $out
+
+build hello: link hello.o
+build hello.o: compile hello.c
